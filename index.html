@@ -2,31 +2,73 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>KAS YIMN - Sistem Keuangan Terintegrasi</title>
-  
+
   <!-- PWA & STANDALONE APP TAGS -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="KAS YIMN">
   <meta name="theme-color" content="#164e3c">
+
   <link rel="apple-touch-icon" href="https://i.ibb.co.com/QFvDr2kg/image.png">
   <link rel="icon" type="image/png" href="https://i.ibb.co.com/QFvDr2kg/image.png">
-  
+
   <!-- Inline Manifest untuk Android Chrome -->
   <link rel="manifest" href='data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22Sistem%20Kas%20YIMN%22%2C%22short_name%22%3A%22KAS%20YIMN%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f0f3f5%22%2C%22theme_color%22%3A%22%23164e3c%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fi.ibb.co.com%2FQFvDr2kg%2Fimage.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D'>
 
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background-color: #f0f3f5; }
-    iframe { width: 100%; height: 100%; border: none; display: block; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #f0f3f5;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    /* Loading indicator sederhana selagi iframe memuat */
+    #loading {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #164e3c;
+      color: #f0f3f5;
+      font-family: sans-serif;
+      font-size: 16px;
+      z-index: 10;
+      transition: opacity 0.3s ease;
+    }
+    #loading.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
+  <div id="loading">Memuat KAS YIMN...</div>
+
   <!-- GANTI URL di bawah dengan URL deploy Apps Script Abdi sendiri -->
-  <iframe src="https://script.google.com/macros/s/AKfycbyF2XmB46pQKjOFYHdZIT4TakIe5Q1rZMcCJs2-WnVZom7UevAX2iZa2eTKCLPKVPav/exec"
-          title="KAS YIMN"
-          allow="clipboard-write"></iframe>
+  <iframe
+    id="kas-frame"
+    src="https://script.google.com/macros/s/AKfycbyF2XmB46pQKjOFYHdZIT4TakIe5Q1rZMcCJs2-WnVZom7UevAX2iZa2eTKCLPKVPav/exec"
+    title="KAS YIMN"
+    allow="clipboard-write"
+    onload="document.getElementById('loading').classList.add('hide')">
+  </iframe>
+
+  <script>
+    // Fallback: sembunyikan loading meski onload tidak terpanggil (misal karena X-Frame-Options)
+    setTimeout(function () {
+      document.getElementById('loading').classList.add('hide');
+    }, 6000);
+  </script>
 </body>
 </html>
